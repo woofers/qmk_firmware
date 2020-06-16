@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-qmk compile -kb keebio/quefrency/rev2 -km jaxson
+qmk compile -kb keebio/quefrency/rev1 -km jaxson
