@@ -1,9 +1,9 @@
 #include QMK_KEYBOARD_H
 
-/* 
- *  This keymap is based on the default keymap for the cospad.
- *  It was adapted for the split 0 layout focusing on the "00" key.
- */
+void keyboard_post_init_user() {
+  backlight_step();
+  rgblight_increase_hue();
+}
 
 enum custom_keycodes {
   DBL_ZRO = SAFE_RANGE,
@@ -13,10 +13,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case DBL_ZRO:
       if (record->event.pressed) {
-        // when keycode DBL_ZRO is pressed
         SEND_STRING("00");
       } else {
-        // when keycode DBL_ZRO is released
       }
       break;
 
@@ -54,7 +52,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_P1,   KC_P2,   KC_P3,
         KC_P0,   DBL_ZRO, KC_PDOT, KC_PENT
     ),
-        
+
     /* Keymap _FL: Function Layer
      * ,-------------------.
      * |RGBT|    |    |    |
