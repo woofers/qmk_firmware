@@ -2,8 +2,8 @@
 
 void keyboard_post_init_user() {
   register_code(KC_NLCK);
-  backlight_step();
-  rgblight_increase_hue();
+  rgblight_disable();
+  backlight_disable();
   unregister_code(KC_NLCK);
 }
 
@@ -31,7 +31,7 @@ enum layer_names {
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    /* Keymap _BL: (Base Layer) Default Layer
+    /*
      * ,-------------------.
      * |Esc |TAB | =  | BS |
      * |----|----|----|----|
@@ -55,27 +55,27 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_P0,   DBL_ZRO, KC_PDOT, KC_PENT
     ),
 
-    /* Keymap _FL: Function Layer
+    /*
      * ,-------------------.
-     * |RGBT|    |    |    |
+     * |    |    |    |    |
      * |----|----|----|----|
-     * |RGBM|RGBP|BTOG|    |
+     * |    |    |    |    |
      * |----|----|----|----|
-     * |HUD |HUI |BON |    |
+     * |    |    |    |    |
      * |----|----|----|    |
-     * |SAD |SAI |BOFF|    |
+     * |    |    |    |    |
      * |----|----|----|----|
-     * |VAD |VAS |BSTP|    |
+     * |    |    |    |    |
      * |----|----|----|    |
      * |    |    |RST |    |
      * `-------------------'
     */
     [_FL] = LAYOUT_numpad_6x4_split_zero(
-        RGB_TOG, _______, _______, _______,
-        RGB_MOD, RGB_M_P, BL_TOGG, _______,
-        RGB_HUD, RGB_HUI, BL_ON,
-        RGB_SAD, RGB_SAI, BL_OFF,  _______,
-        RGB_VAD, RGB_VAI, BL_STEP,
+        _______, _______, _______, _______,
+        _______, _______, _______, _______,
+        _______, _______, _______,
+        _______, _______, _______, _______,
+        _______, _______, _______,
         _______, _______, RESET,   _______
     )
 };
