@@ -31,7 +31,7 @@ enum layer_names {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /*
      * ,-------------------.
-     * |Esc |TAB | =  | BS |
+     * | Spc| Tab| =  |Back|
      * |----|----|----|----|
      * | FN | /  | *  | -  |
      * |----|----|----|----|
@@ -45,7 +45,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * `-------------------'
      */
     [_BL] = LAYOUT_numpad_6x4_split_zero(
-        KC_ESC,  KC_TAB,  KC_PEQL, KC_BSPC,
+        KC_SPC,  KC_TAB,  KC_PEQL, KC_BSPC,
         MO(_FL), KC_PSLS, KC_PAST, KC_PMNS,
         KC_P7,   KC_P8,   KC_P9,
         KC_P4,   KC_P5,   KC_P6,   KC_PPLS,
@@ -55,25 +55,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     /*
      * ,-------------------.
-     * |    |    |    |    |
+     * | Esc| Tab| =  |Back|
      * |----|----|----|----|
-     * |    |    |    |    |
+     * | FN | \  | !  | _  |
      * |----|----|----|----|
-     * |    |    |    |    |
-     * |----|----|----|    |
-     * |    |    |    |    |
+     * |Left| ↑  |PgUp|    |
+     * |----|----|----| (  |
+     * | ←  | $  | →  |    |
      * |----|----|----|----|
-     * |    |    |    |    |
-     * |----|----|----|    |
-     * |    |    |RST |    |
+     * | End| ↓  |PgDn|    |
+     * |----|----|----| )  |
+     * | Ins| RST| Del|    |
      * `-------------------'
     */
     [_FL] = LAYOUT_numpad_6x4_split_zero(
-        _______, _______, _______, _______,
-        _______, _______, _______, _______,
-        _______, _______, _______,
-        _______, _______, _______, _______,
-        _______, _______, _______,
-        _______, _______, RESET,   _______
+        KC_ESC,  KC_TAB,  KC_PEQL, KC_BSPC,
+        _______, KC_BSLS, KC_EXLM, KC_UNDS,
+        KC_HOME,   KC_UP, KC_PGUP,
+        KC_LEFT,  KC_DLR, KC_RGHT, KC_LPRN,
+         KC_END, KC_DOWN, KC_PGDN,
+         KC_INS,   RESET,  KC_DEL, KC_RPRN
     )
 };
