@@ -1,8 +1,10 @@
 #include QMK_KEYBOARD_H
 
 void keyboard_post_init_user() {
+  register_code(KC_NLCK);
   backlight_step();
   rgblight_increase_hue();
+  unregister_code(KC_NLCK);
 }
 
 enum custom_keycodes {
@@ -31,9 +33,9 @@ enum layer_names {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /* Keymap _BL: (Base Layer) Default Layer
      * ,-------------------.
-     * |Esc |TAB | FN | BS |
+     * |Esc |TAB | =  | BS |
      * |----|----|----|----|
-     * | NL | /  | *  | -  |
+     * | FN | /  | *  | -  |
      * |----|----|----|----|
      * | 7  | 8  | 9  |    |
      * |----|----|----| +  |
@@ -45,8 +47,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * `-------------------'
      */
     [_BL] = LAYOUT_numpad_6x4_split_zero(
-        KC_ESC,  KC_TAB,  MO(_FL), KC_BSPC,
-        KC_NLCK, KC_PSLS, KC_PAST, KC_PMNS,
+        KC_ESC,  KC_TAB,  KC_PEQL, KC_BSPC,
+        MO(_FL), KC_PSLS, KC_PAST, KC_PMNS,
         KC_P7,   KC_P8,   KC_P9,
         KC_P4,   KC_P5,   KC_P6,   KC_PPLS,
         KC_P1,   KC_P2,   KC_P3,
