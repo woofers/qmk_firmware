@@ -2,8 +2,6 @@
 
 void keyboard_post_init_user() {
   register_code(KC_NLCK);
-  rgblight_disable();
-  backlight_disable();
   unregister_code(KC_NLCK);
 }
 
