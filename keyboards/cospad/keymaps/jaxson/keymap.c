@@ -23,10 +23,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   return true;
 };
 
-// Defines names for use in layer keycodes and the keymap
 enum layer_names {
-    _BL,
-    _FL
+  _BL,
+  _FL,
+  _GM
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -70,11 +70,35 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * `-------------------'
     */
     [_FL] = LAYOUT_numpad_6x4_split_zero(
-        KC_ESC,  KC_TAB,  KC_PEQL, KC_BSPC,
+        KC_ESC,  TG(_GM), KC_PEQL, KC_BSPC,
         _______, KC_BSLS, KC_EXLM, KC_UNDS,
         KC_HOME,   KC_UP, KC_PGUP,
         KC_LEFT,  KC_DLR, KC_RGHT, KC_LPRN,
          KC_END, KC_DOWN, KC_PGDN,
          KC_INS,   RESET,  KC_DEL, KC_RPRN
+    ),
+    /*
+     * ,-------------------.
+     * | Esc| FN | =  |Back|
+     * |----|----|----|----|
+     * | Tab| F  | G  | _  |
+     * |----|----|----|----|
+     * | Q  | W  | E  |    |
+     * |----|----|----| R  |
+     * | A  | S  | D  |    |
+     * |----|----|----|----|
+     * | Z  | X  | C  |    |
+     * |----|----|----| Spc|
+     * |Ctrl| Spc| Spc|    |
+     * `-------------------'
+    */
+    [_GM] = LAYOUT_numpad_6x4_split_zero(
+        KC_ESC,   TO(_BL),   KC_PEQL, KC_BSPC,
+        KC_TAB,      KC_F,   KC_G,    KC_UNDS,
+         KC_Q,       KC_W,   KC_E,
+         KC_A,       KC_S,   KC_D,       KC_R,
+         KC_Z,       KC_X,   KC_C,
+         KC_LCTL,    KC_SPC, KC_SPC,   KC_SPC
     )
+
 };
