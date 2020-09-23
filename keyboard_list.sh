@@ -10,3 +10,4 @@ echo ""
 
 echo "  - quefrency"
 echo "  - cospad"
+echo "  - brutal60"
