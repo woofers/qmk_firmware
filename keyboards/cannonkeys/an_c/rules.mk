@@ -13,7 +13,7 @@ DFU_SUFFIX_ARGS = -v FFFF -p FFFF
 
 
 BOOTMAGIC_ENABLE = full	# Virtual DIP switch configuration
-MOUSEKEY_ENABLE = yes	# Mouse keys
+MOUSEKEY_ENABLE = no	# Mouse keys
 EXTRAKEY_ENABLE = yes	# Audio control and System control
 CONSOLE_ENABLE = yes	# Console for debug
 COMMAND_ENABLE = yes    # Commands for debug and configuration
@@ -23,6 +23,7 @@ CUSTOM_MATRIX = no      # Custom matrix file
 BACKLIGHT_ENABLE = yes
 RGBLIGHT_ENABLE = yes
 WS2812_DRIVER = spi
+RAW_ENABLE = yes
 
 LAYOUTS = 60_ansi 60_tsangan_hhkb
 
