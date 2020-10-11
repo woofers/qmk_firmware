@@ -17,7 +17,10 @@ CUSTOM_MATRIX = no      # Custom matrix file
 BACKLIGHT_ENABLE = yes
 RGBLIGHT_ENABLE = yes
 WS2812_DRIVER = spi
+
+COMBO_ENABLE = no
 RAW_ENABLE = yes
+LEADER_ENABLE = no
 
 LAYOUTS = 60_ansi 60_tsangan_hhkb
 

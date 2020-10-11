@@ -1,9 +1,12 @@
 #include "config.h"
 #include "keycode.h"
 
+
+#define has_ctrl() get_mods() & MOD_MASK_CTRL
+#define has_shift() get_mods() & MOD_MASK_SHIFT
+
 uint16_t leader_timer;
 uint16_t LEADER = KC_NO;
-#define LEADER_TIMEOUT 500
 
 enum custom_keycodes {
   FUNC = SAFE_RANGE,
