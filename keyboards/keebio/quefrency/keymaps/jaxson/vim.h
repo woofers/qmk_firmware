@@ -13,7 +13,6 @@ enum custom_keycodes {
 };
 
 #define KC_FOR     LCTL(KC_RIGHT)
-
 #define KC_BACK    LCTL(KC_LEFT)
 #define KC_FORWARD VIM_W
 #define KC_UNDO    LCTL(KC_Z)
@@ -38,25 +37,28 @@ void vim_leader_timeout(void) {
 }
 
 void vim_delete_line(void) {
+  vim_reset();
   SEND_STRING(SS_LCTL(SS_LSFT(SS_TAP(X_END)) SS_TAP(X_X)));
 }
 
 void vim_delete_all(void) {
   vim_reset();
-  SEND_STRING(SS_TAP(X_HOME) SS_LCTL(SS_LSFT(SS_TAP(X_END)) SS_TAP(X_X)));
+  SEND_STRING(SS_LCTL(SS_TAP(X_HOME) SS_LSFT(SS_TAP(X_END)) SS_TAP(X_X)));
 }
 
 void vim_change_word(void) {
   vim_reset();
-  SEND_STRING(SS_LCTL(SS_LSFT(SS_TAP(X_RIGHT))) SS_TAP(X_BSPC));
+  SEND_STRING(SS_LCTL(SS_LSFT(SS_TAP(X_RIGHT) SS_TAP(X_BSPC))));
 }
 
 void vim_forward_press(void) {
+  vim_reset();
   register_code(KC_LCTL);
   register_code(KC_RIGHT);
 }
 
 void vim_forward_release(void) {
+  vim_reset();
   unregister_code(KC_LCTL);
   unregister_code(KC_RIGHT);
 }
