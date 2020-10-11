@@ -1,7 +1,6 @@
 #include "config.h"
 #include "keycode.h"
 
-
 #define has_ctrl() get_mods() & MOD_MASK_CTRL
 #define has_shift() get_mods() & MOD_MASK_SHIFT
 
@@ -12,7 +11,8 @@ enum custom_keycodes {
   FUNC = SAFE_RANGE,
   VIM_C,
   VIM_D,
-  VIM_W
+  VIM_W,
+  VIM_G
 };
 
 #define KC_FOR     LCTL(KC_RIGHT)
@@ -23,6 +23,7 @@ enum custom_keycodes {
 #define KC_PASTE   LCTL(LSFT(KC_V))
 #define KC_CUT     VIM_D
 #define KC_CHANGE  VIM_C
+#define KC_TOP     VIM_G
 #define KC_FUNC    FUNC
 
 void vim_leader(uint16_t keycode) {
@@ -64,4 +65,17 @@ void vim_forward_release(void) {
   vim_reset();
   unregister_code(KC_LCTL);
   unregister_code(KC_RIGHT);
+}
+
+void vim_to_top(void) {
+  vim_reset();
+  SEND_STRING(SS_LCTL(SS_TAP(X_HOME)));
+}
+
+void vim_to_bottom(void) {
+  vim_reset();
+  bool had_shift = has_shift();
+  if (had_shift) unregister_code(KC_LSFT);
+  SEND_STRING(SS_LCTL(SS_TAP(X_END)));
+  if (had_shift) register_code(KC_LSFT);
 }
