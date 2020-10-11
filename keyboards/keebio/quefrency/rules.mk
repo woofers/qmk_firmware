@@ -23,3 +23,4 @@ DEFAULT_FOLDER = keebio/quefrency/rev1
 
 COMBO_ENABLE = no
 RAW_ENABLE = yes
+LEADER_ENABLE = yes
