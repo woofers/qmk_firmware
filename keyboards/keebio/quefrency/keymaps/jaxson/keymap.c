@@ -17,10 +17,23 @@
   RAW_USAGE_ID:   0x61
 */
 
+
+LEADER_EXTERNS();
+
+void matrix_scan_user(void) {
+  LEADER_DICTIONARY() {
+    leading = false;
+    leader_end();
+    SEQ_ONE_KEY(KC_FORWARD) {
+      SEND_STRING(SS_LCTL(SS_LSFT(SS_TAP(X_RIGHT))));
+      tap_code(KC_BSPC);
+    }
+  }
+}
+
 enum custom_keycodes {
   ESCAPE = SAFE_RANGE,
-  FUNC,
-  CHANGE_WORD
+  FUNC
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -50,17 +63,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       break;
     }
-    case CHANGE_WORD: {
-      if (record->event.pressed) {
-        SEND_STRING(SS_LCTL(SS_LSFT(SS_TAP(X_RIGHT))));
-        tap_code(KC_BSPC);
-      }
-      break;
-    }
   }
   return true;
 };
-
 
 #ifdef INDICATOR_LIGHT
 
@@ -108,14 +113,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_ESC,  KC_F1,   KC_F2,      KC_F3,      KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,    KC_F10,  KC_F11,  KC_F12,  KC_DEL, KC_DEL,
     _______, _______, KC_FORWARD, _______,    _______, _______, _______, _______, KC_HOME, KC_END,   _______, _______, _______, _______,
     _______, _______, _______,    _______,    _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT, _______, _______, _______,
-    _______, _______, _______,    MO(_RAISE), _______, KC_BACK, _______, _______, _______, _______,  _______, _______, _______,
+    _______, _______, _______,    KC_LEAD,    _______, KC_BACK, _______, _______, _______, _______,  _______, _______, _______,
     _______, _______, _______,    _______,    _______,          _______, _______, _______, _______,  _______, _______, _______
-  ),
-  [_RAISE] = LAYOUT(
-    _______, _______, _______,     _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______, _______, _______,
-    _______, _______, CHANGE_WORD, _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______, _______,
-    _______, _______, _______,     _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______,
-    _______, _______, _______,     _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______,
-    _______, _______, _______,     _______, _______,          _______, _______, _______, _______,  _______, _______, _______
-  ),
+  )
 };
