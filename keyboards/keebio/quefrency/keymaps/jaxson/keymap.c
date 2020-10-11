@@ -1,27 +1,13 @@
 #include QMK_KEYBOARD_H
 #include "raw_hid.h"
+#include "vim.h"
 
 #define _BASE 0
 #define _LOWER 1
 #define _RAISE 2
 
 #define has_ctrl() get_mods() & MOD_MASK_CTRL
-
-
-enum custom_keycodes {
-  ESCAPE = SAFE_RANGE,
-  FUNC,
-  TRIM_LINE
-};
-
-
-#define KC_BACK    LCTL(KC_LEFT)
-#define KC_FORWARD LCTL(KC_RIGHT)
-#define KC_UNDO    LCTL(KC_Z)
-#define KC_YANK    LCTL(KC_C)
-#define KC_PASTE   LCTL(LSFT(KC_V))
-#define KC_CUT     TRIM_LINE
-#define KC_FUNC    FUNC
+#define has_shift() get_mods() & MOD_MASK_SHIFT
 
 /*
   VENDOR_ID:      0xCB10: 51984
@@ -29,19 +15,6 @@ enum custom_keycodes {
   RAW_USAGE_PAGE: 0xFF60
   RAW_USAGE_ID:   0x61
 */
-
-
-LEADER_EXTERNS();
-
-void matrix_scan_user(void) {
-  LEADER_DICTIONARY() {
-    leading = false;
-    leader_end();
-    SEQ_ONE_KEY(KC_FORWARD) {
-      SEND_STRING(SS_LCTL(SS_LSFT(SS_TAP(X_RIGHT))) SS_TAP(X_BSPC));
-    }
-  }
-}
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
@@ -59,20 +32,43 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       break;
     }
-    case ESCAPE: {
-      static bool was_ctrl;
+    case VIM_D: {
       if (record->event.pressed) {
-        was_ctrl = has_ctrl();
-        if (!was_ctrl) register_code(KC_ESC);
-      }
-      else {
-        if (!was_ctrl) unregister_code(KC_ESC);
+        vim_leader_timeout();
+        switch (LEADER) {
+          case KC_NO:
+            if (has_shift()) {
+              vim_delete_line();
+            }
+            else {
+              vim_leader(KC_D);
+            }
+            break;
+          case KC_D:
+            vim_delete_all();
+            break;
+        }
       }
       break;
     }
-    case TRIM_LINE: {
-      if (record->event.pressed) {
-        SEND_STRING(SS_LCTL(SS_LSFT(SS_TAP(X_END)) SS_TAP(X_X)));
+    case VIM_C: {
+      if (record->event.pressed) vim_leader(KC_C);
+      break;
+    }
+    case VIM_W: {
+      vim_leader_timeout();
+      switch (LEADER) {
+        case KC_C:
+          vim_change_word();
+          break;
+        default:
+          if (record->event.pressed) {
+            vim_forward_press();
+          }
+          else {
+            vim_forward_release();
+          }
+          break;
       }
       break;
     }
@@ -123,11 +119,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_LCTL, _______, KC_LALT, _______, KC_SPC,           KC_SPC, KC_SPC,  _______, _______, _______, _______, _______
   ),
   [_LOWER] = LAYOUT(
-    KC_ESC,  KC_F1,   KC_F2,      KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,    KC_F10,   KC_F11,  KC_F12,  _______, _______,
-    _______, _______, KC_FORWARD, _______, _______, _______, KC_YANK, KC_UNDO, KC_HOME, KC_END,   KC_PASTE, _______, _______, _______,
-    _______, _______, _______,    KC_CUT,  _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT, _______,  _______, _______,
-    _______, _______, KC_DEL,     KC_LEAD, KC_LSFT, KC_BACK, _______, _______, _______, _______,  _______,  _______, _______,
-    _______, _______, _______,    _______, _______,          _______, _______, _______, _______,  _______,  _______, _______
+    KC_ESC,  KC_F1,   KC_F2,      KC_F3,     KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,    KC_F10,   KC_F11,  KC_F12,  _______, _______,
+    _______, _______, KC_FORWARD, _______,   _______, _______, KC_YANK, KC_UNDO, KC_HOME, KC_END,   KC_PASTE, _______, _______, _______,
+    _______, _______, _______,    KC_CUT,    _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT, _______,  _______, _______,
+    _______, _______, KC_DEL,     KC_CHANGE, KC_LSFT, KC_BACK, _______, _______, _______, _______,  _______,  _______, _______,
+    _______, _______, _______,    _______,   _______,          _______, _______, _______, _______,  _______,  _______, _______
 
   )
 };

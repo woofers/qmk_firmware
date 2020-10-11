@@ -31,5 +31,3 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define MANUFACTURER Jaxson
 #define PRODUCT      Woofrency Rev. 1
 #define DESCRIPTION  Jaxson\x27s split keyboard
-
-#define LEADER_TIMEOUT 300
