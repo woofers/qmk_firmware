@@ -53,10 +53,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       break;
     }
     case VIM_W: {
-      vim_leader_timeout();
+      if (record->event.pressed) vim_leader_timeout();
       switch (LEADER) {
         case KC_C:
-          vim_change_word();
+          if (record->event.pressed) vim_change_word();
           break;
         default:
           if (record->event.pressed) {
@@ -69,6 +69,25 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       break;
     }
+    case VIM_G: {
+      if (record->event.pressed) {
+        vim_leader_timeout();
+        switch (LEADER) {
+          case KC_G:
+            vim_to_top();
+            break;
+          default:
+            if (has_shift()) {
+              vim_to_bottom();
+            }
+            else {
+              vim_leader(KC_G);
+            }
+            break;
+        }
+      }
+    }
+    break;
   }
   return true;
 };
@@ -118,7 +137,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_LOWER] = LAYOUT(
     KC_ESC,  KC_F1,   KC_F2,      KC_F3,     KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,    KC_F10,   KC_F11,  KC_F12,  _______, _______,
     _______, _______, KC_FORWARD, _______,   _______, _______, KC_YANK, KC_UNDO, KC_HOME, KC_END,   KC_PASTE, _______, _______, _______,
-    _______, _______, _______,    KC_CUT,    _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT, _______,  _______, _______,
+    _______, _______, _______,    KC_CUT,    _______, KC_TOP,  KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT, _______,  _______, _______,
     _______, _______, KC_DEL,     KC_CHANGE, KC_LSFT, KC_BACK, _______, _______, _______, _______,  _______,  _______, _______,
     _______, _______, _______,    _______,   _______,          _______, _______, _______, _______,  _______,  _______, _______
 
