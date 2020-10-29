@@ -20,8 +20,8 @@ COMMAND_ENABLE = yes    # Commands for debug and configuration
 SLEEP_LED_ENABLE = no   # Breathing sleep LED during USB suspend
 NKRO_ENABLE = yes	    # USB Nkey Rollover
 CUSTOM_MATRIX = no      # Custom matrix file
-BACKLIGHT_ENABLE = yes
-RGBLIGHT_ENABLE = yes
+BACKLIGHT_ENABLE = no
+RGBLIGHT_ENABLE = no
 WS2812_DRIVER = spi
 
 COMBO_ENABLE = no
