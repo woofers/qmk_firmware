@@ -7,4 +7,4 @@ if [ "$?" != 0 ]; then
 fi
 echo $STATUS
 
-make $STATUS:jaxson:dfu
+qmk flash -kb $STATUS -km jaxson
